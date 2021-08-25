@@ -1,4 +1,5 @@
 import random
+
 from django.conf import settings
 from django.template.loader import render_to_string
 
@@ -214,8 +215,11 @@ class ForeignKeyFaker(FieldFaker):
     def get_factory(self):
         to = self.field.remote_field.model.__name__
         app_label = self.field.remote_field.model._meta.app_label
-        return "{root_dir}.{app_label}.{to}Factory".format(
-            root_dir=self.root_dir, app_label=app_label, to=to
+        return "{root_dir}.{app_label}.{file_name}.{to}Factory".format(
+            root_dir=self.root_dir,
+            app_label=app_label,
+            file_name=to.lower(),
+            to=to.lower(),
         )
 
 
@@ -267,8 +271,11 @@ class OneToOneFieldFaker(FieldFaker):
     def get_factory(self):
         to = self.field.remote_field.model.__name__
         app_label = self.field.remote_field.model._meta.app_label
-        return "{root_dir}.{app_label}.{to}Factory".format(
-            root_dir=self.root_dir, app_label=app_label, to=to
+        return "{root_dir}.{app_label}.{file_name}.{to}Factory".format(
+            root_dir=self.root_dir,
+            app_label=app_label,
+            file_name=to.lower(),
+            to=to.lower(),
         )
 
 
