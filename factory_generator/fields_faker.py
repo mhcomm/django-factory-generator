@@ -219,7 +219,7 @@ class ForeignKeyFaker(FieldFaker):
             root_dir=self.root_dir,
             app_label=app_label,
             file_name=to.lower(),
-            to=to.lower(),
+            to=to,
         )
 
 
@@ -275,7 +275,7 @@ class OneToOneFieldFaker(FieldFaker):
             root_dir=self.root_dir,
             app_label=app_label,
             file_name=to.lower(),
-            to=to.lower(),
+            to=to,
         )
 
 
