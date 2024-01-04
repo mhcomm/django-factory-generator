@@ -50,5 +50,7 @@ setup(
     keywords="python django factory_boy test",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        "isort",
+    ],
 )
