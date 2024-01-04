@@ -1,13 +1,16 @@
 |django-factory-generator v1.0.4 on PyPi| |MIT license| |Stable|
 
-django-factory-generator
+mh-django-factory-generator
 ========================
+
+Fork of django-factory-generator v1.0.4
 
 Generate (factory_boy) Model Factory for each model of your Django app
 
 Changelog
 ---------
 
+-  1.0.5 generate PEP8 compliant factories
 -  1.0.4 fix has_choices property for Django 3.0
 -  1.0.3 Remove useless print statements
 -  1.0.2 Add ``PointFieldFaker`` to support ``PointField``. Refactor the
@@ -29,7 +32,7 @@ Installation
 
 Install using ``pip`` :
 
-``pip install django_factory_generator``
+``pip install mh_django_factory_generator``
 
 Add ``factory_generator`` to your ``INSTALLED_APPS`` settings.
 
@@ -112,6 +115,7 @@ Here are all the settings you can use, with their default value :
    FACTORY_IGNORE_FIELDS = []
    FACTORY_ROOT_DIR = 'model_factories'
    FACTORY_IGNORE_NON_EDITABLE_FIELDS = True
+   FACTORY_BASE_CLASS = 'factory.django.DjangoModelFactory'
 
 Todo
 ----
