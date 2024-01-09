@@ -1,5 +1,6 @@
 import os
 
+import isort
 from django.conf import settings
 from django.template.loader import render_to_string
 
@@ -7,6 +8,7 @@ from factory_generator import VERSION
 from factory_generator.fields_faker import FIELD_FAKER_MAP
 from factory_generator.utils import import_from_string
 
+FACTORY_BASE_CLASS = getattr(settings, "FACTORY_BASE_CLASS", "factory.django.DjangoModelFactory")
 NORMALIZE_FIELD_MAP = getattr(settings, "FACTORY_NORMALIZE_FIELD_MAP", {})
 
 
@@ -233,10 +235,17 @@ class FactoryModelGenerator(PathMixin):
         """
         Get the context needed for the definition of the `[Model]FactoryBase` class
         """
+        factory_base_class = FACTORY_BASE_CLASS
+        factory_base_class_import = FACTORY_BASE_CLASS.split(".")[0]
+        if factory_base_class_import != "factory":
+            factory_base_class_import = FACTORY_BASE_CLASS
+            factory_base_class = FACTORY_BASE_CLASS.split(".")[-1]
+
         res = {
             "model_name": self.model.__name__,
             "model_module": self.model.__module__,
             "factory_name": self.factory_name,
+            "factory_base_class": factory_base_class,
             "factory_base_name": self.factory_base_name,
             "imports": [],
             "version": VERSION,
@@ -245,7 +254,7 @@ class FactoryModelGenerator(PathMixin):
             "unique": [],
             "unique_kwargs": "",
         }
-        imports = []
+        imports = [factory_base_class_import]
         for field in self.fields:
             factory = FactoryFieldGenerator(field, self.model)
             if factory.is_ignored:
@@ -349,6 +358,7 @@ class FactoryModelGenerator(PathMixin):
             self.app_base_factory_file_path, "w", encoding="utf-8"
         ) as base_factory_file:
             base_factory_file.write(self.render_base)
+        isort.file(self.app_base_factory_file_path)
 
     def create_factory_file(self):
         """
@@ -360,6 +370,7 @@ class FactoryModelGenerator(PathMixin):
                 self.app_factory_file_path, "w", encoding="utf-8"
             ) as factory_file:
                 factory_file.write(self.render)
+            isort.file(self.app_factory_file_path)
 
     def create_files(self):
         """
@@ -403,6 +414,7 @@ class FactoryAppGenerator(PathMixin):
         Create or override the file `__init__.py` which imports all factories
         """
         if imports:
+            imports.sort(key=lambda imp: (imp["module"], imp["factory"]))  # isort
             with open(self.app_init_file_path, "w", encoding="utf-8") as init_file:
                 init_file.write(
                     self.render_init_file(

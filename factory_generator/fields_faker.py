@@ -77,6 +77,7 @@ class BigIntegerFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "min", "max"]
     provider = "random_int"
+    imports = ["factory"]
 
     def get_min(self):
         return -9223372036854775808
@@ -90,12 +91,14 @@ class BinaryFieldFaker(FieldFaker):
     faker_kwargs = ["provider", "length"]
     provider = "binary"
     length = 300
+    imports = ["factory"]
 
 
 class BooleanFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "elements"]
     provider = "random_element"
+    imports = ["factory"]
 
     def get_elements(self):
         if self.field.null:
@@ -108,6 +111,7 @@ class CharFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "max_chars"]
     provider = "pystr"
+    imports = ["factory"]
 
     def get_max_chars(self):
         return self.field.max_length
@@ -118,6 +122,7 @@ class ChoiceFieldFaker(FieldFaker):
     faker_kwargs = ["provider", "elements"]
     unquote_kwargs = ["elements"]
     provider = "random_element"
+    imports = ["factory"]
 
     def get_elements(self):
         return "{field_name}_CHOICES".format(field_name=self.field.name.upper())
@@ -128,7 +133,7 @@ class DateFieldFaker(FieldFaker):
     faker_kwargs = ["provider", "end_datetime", "tzinfo"]
     unquote_kwargs = ["tzinfo"]
     provider = "date_time"
-    imports = ["django.utils.timezone"]
+    imports = ["factory", "django.utils.timezone"]
 
     def get_end_datetime(self):
         return None
@@ -142,7 +147,7 @@ class DateTimeFieldFaker(FieldFaker):
     faker_kwargs = ["provider", "end_datetime", "tzinfo"]
     provider = "date_time"
     unquote_kwargs = ["tzinfo"]
-    imports = ["django.utils.timezone"]
+    imports = ["factory", "django.utils.timezone"]
 
     def get_end_datetime(self):
         return None
@@ -155,6 +160,7 @@ class DecimalFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "left_digits", "right_digits", "positive"]
     provider = "pydecimal"
+    imports = ["factory"]
 
     def get_positive(self):
         return None
@@ -170,8 +176,7 @@ class DurationFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "end_datetime"]
     provider = "time_delta"
-
-    imports = ["django.utils.timezone"]
+    imports = ["factory", "django.utils.timezone"]
 
     def get_end_datetime(self):
         return None
@@ -181,22 +186,26 @@ class EmailFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider"]
     provider = "safe_email"
+    imports = ["factory"]
 
 
 class FileFieldFaker(FieldFaker):
     faker_class = "factory.django.FileField"
+    imports = ["factory"]
 
 
 class FilePathFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider"]
     provider = "file_path"
+    imports = ["factory"]
 
 
 class FloatFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "left_digits", "right_digits", "positive"]
     provider = "pyfloat"
+    imports = ["factory"]
 
     def get_positive(self):
         return None
@@ -211,6 +220,7 @@ class FloatFieldFaker(FieldFaker):
 class ForeignKeyFaker(FieldFaker):
     faker_class = "factory.SubFactory"
     faker_kwargs = ["factory"]
+    imports = ["factory"]
 
     def get_factory(self):
         to = self.field.remote_field.model.__name__
@@ -225,12 +235,14 @@ class ForeignKeyFaker(FieldFaker):
 
 class ImageFieldFaker(FieldFaker):
     faker_class = "factory.django.ImageField"
+    imports = ["factory"]
 
 
 class IntegerFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "min", "max"]
     provider = "random_int"
+    imports = ["factory"]
 
     def get_min(self):
         return -2147483648
@@ -242,6 +254,7 @@ class IntegerFieldFaker(FieldFaker):
 class GenericIPAddressFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider"]
+    imports = ["factory"]
 
     def get_provider(self):
         if self.field.protocol == "both":
@@ -255,6 +268,7 @@ class GenericIPAddressFieldFaker(FieldFaker):
 class ManyToManyFieldFaker(FieldFaker):
     faker_class = None
     template = "factory_generator/manytomany.py-tpl"
+    imports = ["factory"]
 
 
 class NullBooleanFieldFaker(FieldFaker):
@@ -262,11 +276,13 @@ class NullBooleanFieldFaker(FieldFaker):
     faker_kwargs = ["provider", "elements"]
     provider = "random_element"
     elements = (None, True, False)
+    imports = ["factory"]
 
 
 class OneToOneFieldFaker(FieldFaker):
     faker_class = "factory.SubFactory"
     faker_kwargs = ["factory"]
+    imports = ["factory"]
 
     def get_factory(self):
         to = self.field.remote_field.model.__name__
@@ -283,6 +299,7 @@ class PositiveIntegerFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "min", "max"]
     provider = "random_int"
+    imports = ["factory"]
 
     def get_min(self):
         return 0
@@ -295,6 +312,7 @@ class PositiveSmallIntegerFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "min", "max"]
     provider = "random_int"
+    imports = ["factory"]
 
     def get_min(self):
         return 0
@@ -307,12 +325,14 @@ class SlugFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider"]
     provider = "slug"
+    imports = ["factory"]
 
 
 class SmallIntegerFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "min", "max"]
     provider = "random_int"
+    imports = ["factory"]
 
     def get_min(self):
         return -32768
@@ -325,6 +345,7 @@ class TextFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider"]
     provider = "text"
+    imports = ["factory"]
 
 
 class TimeFieldFaker(FieldFaker):
@@ -332,26 +353,28 @@ class TimeFieldFaker(FieldFaker):
     faker_kwargs = ["provider", "end_datetime"]
     provider = "time_object"
     end_datetime = None
-    imports = ["django.utils.timezone"]
+    imports = ["factory", "django.utils.timezone"]
 
 
 class URLFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider"]
     provider = "url"
+    imports = ["factory"]
 
 
 class UUIDFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider"]
     provider = "uuid4"
+    imports = ["factory"]
 
 
 class PointFieldFaker(FieldFaker):
     faker_class = "factory.LazyFunction"
     faker_kwargs = ["function"]
     unquote_kwargs = ["function"]
-    imports = ["factory_generator.fields_faker.PointFieldFaker"]
+    imports = ["factory", "factory_generator.fields_faker.PointFieldFaker"]
 
     function = "PointFieldFaker.get_random_point"
 

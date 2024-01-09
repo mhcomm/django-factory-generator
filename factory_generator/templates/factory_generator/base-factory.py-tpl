@@ -1,8 +1,6 @@
 """
 Generated using factory_generator {{version}}.
 """
-
-import factory
 {% if imports %}
 {% for import_str in imports %}{{import_str}}
 {% endfor %}{% endif %}
@@ -11,12 +9,10 @@ from {{model_module}} import {{model_name}}
 {% for choice in choices %}{{choice}}
 {% endfor %}{% endif %}
 
-class {{factory_base_name}}(factory.django.DjangoModelFactory):
+class {{factory_base_name}}({{factory_base_class}}):
 
-    {% for field in fields %}{{field.render}}
-    {% endfor %}
+{% for field in fields %}{{field.render}}{% endfor %}
     class Meta:
         model = {{model_name}}
-{% if unique_kwargs %}        django_get_or_create = ({{unique_kwargs|safe}}){% endif %}
-
-{{separator|safe}}{{existing_content|safe}}
+{% if unique_kwargs %}        django_get_or_create = ({{unique_kwargs|safe}})
+{% endif %}
