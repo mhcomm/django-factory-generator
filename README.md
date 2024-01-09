@@ -4,10 +4,13 @@
 
 # django-factory-generator
 
+Fork of django-factory-generator v1.0.4
+
 Generate (factory_boy) Model Factory for each model of your Django app
 
 ## Changelog
 
++ 1.0.5 generate PEP8 compliant factories
 + 1.0.4 fix has_choices property for Django 3.0
 + 1.0.3 Remove useless print statements
 + 1.0.2 Add `PointFieldFaker` to support `PointField`. Refactor the way modules are imported on generated factories
@@ -98,8 +101,8 @@ FACTORY_IGNORE_FIELDS = []
 FACTORY_IGNORE_APPS = []
 FACTORY_ROOT_DIR = 'model_factories'
 FACTORY_IGNORE_NON_EDITABLE_FIELDS = True
-FACTORY_IGNORE_APPS = []
 FACTORY_IGNORE_INIT_IMPORT = False
+FACTORY_BASE_CLASS = 'factory.django.DjangoModelFactory'
 ```
 
 ## Todo
