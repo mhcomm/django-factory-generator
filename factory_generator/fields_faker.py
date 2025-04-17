@@ -130,16 +130,12 @@ class ChoiceFieldFaker(FieldFaker):
 
 class DateFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
-    faker_kwargs = ["provider", "end_datetime", "tzinfo"]
-    unquote_kwargs = ["tzinfo"]
-    provider = "date_time"
-    imports = ["factory", "django.utils.timezone"]
+    faker_kwargs = ["provider", "end_datetime"]
+    provider = "date"
+    imports = ["factory"]
 
     def get_end_datetime(self):
         return None
-
-    def get_tzinfo(self):
-        return "timezone.get_current_timezone()"
 
 
 class DateTimeFieldFaker(FieldFaker):
@@ -225,10 +221,9 @@ class ForeignKeyFaker(FieldFaker):
     def get_factory(self):
         to = self.field.remote_field.model.__name__
         app_label = self.field.remote_field.model._meta.app_label
-        return "{root_dir}.{app_label}.{file_name}.{to}Factory".format(
+        return "{root_dir}.{app_label}.{to}Factory".format(
             root_dir=self.root_dir,
             app_label=app_label,
-            file_name=to.lower(),
             to=to,
         )
 
