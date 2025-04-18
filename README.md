@@ -103,6 +103,7 @@ FACTORY_ROOT_DIR = 'model_factories'
 FACTORY_IGNORE_NON_EDITABLE_FIELDS = True
 FACTORY_IGNORE_INIT_IMPORT = False
 FACTORY_BASE_CLASS = 'factory.django.DjangoModelFactory'
+FACTORY_LINE_LENGTH = 79
 ```
 
 ## Todo
