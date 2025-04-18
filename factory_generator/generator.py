@@ -50,9 +50,9 @@ class FactoryFieldGenerator:
     @property
     def field_faker_string(self):
         assert self.field_class in FIELD_FAKER_MAP, (
-            "No FieldFaker defined for `%s`, specify a corresponding FieldFakerClass in `settings.FIELD_FAKER_MAP` "
-            + "or define a corresponding model in `settings.FACTORY_NORMALIZE_FIELD_MAP`"
-            % self.field_class
+            ("No FieldFaker defined for `%s`, specify a corresponding FieldFakerClass in `settings.FIELD_FAKER_MAP` "
+             "or define a corresponding model in `settings.FACTORY_NORMALIZE_FIELD_MAP`"
+             ) % self.field_class
         )
         return FIELD_FAKER_MAP[self.field_class]
 

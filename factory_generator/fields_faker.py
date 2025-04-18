@@ -32,11 +32,18 @@ class FieldFaker:
         """
         Return the context needed to properly define the faker
         """
-        return {
+        ctxt = {
             "faker_class": self.get_faker_class(),
             "faker_kwargs": self.get_faker_kwargs(),
             "field": self.field,
+            "noqa": "",
         }
+        if ctxt["faker_class"] is not None:
+            if (len(ctxt["faker_class"])
+                    + len(ctxt["faker_kwargs"])
+                    + len(self.field.name) + 9) > getattr(settings, "FACTORY_LINE_LENGTH", 79):
+                ctxt["noqa"] = "  # noqa: E501"
+        return ctxt
 
     def render(self):
         return render_to_string(self.template, self.context)
@@ -131,7 +138,7 @@ class ChoiceFieldFaker(FieldFaker):
 class DateFieldFaker(FieldFaker):
     faker_class = "factory.Faker"
     faker_kwargs = ["provider", "end_datetime"]
-    provider = "date"
+    provider = "date_object"
     imports = ["factory"]
 
     def get_end_datetime(self):
@@ -143,13 +150,22 @@ class DateTimeFieldFaker(FieldFaker):
     faker_kwargs = ["provider", "end_datetime", "tzinfo"]
     provider = "date_time"
     unquote_kwargs = ["tzinfo"]
-    imports = ["factory", "django.utils.timezone"]
+
+    @property
+    def get_imports(self):
+        if getattr(settings, "USE_TZ", False):
+            return ["factory", "django.utils.timezone"]
+        else:
+            return ["factory"]
 
     def get_end_datetime(self):
         return None
 
     def get_tzinfo(self):
-        return "timezone.get_current_timezone()"
+        if getattr(settings, "USE_TZ", False):
+            return "timezone.get_current_timezone()"
+        else:
+            return None
 
 
 class DecimalFieldFaker(FieldFaker):
