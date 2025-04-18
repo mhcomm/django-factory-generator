@@ -116,6 +116,7 @@ Here are all the settings you can use, with their default value :
    FACTORY_ROOT_DIR = 'model_factories'
    FACTORY_IGNORE_NON_EDITABLE_FIELDS = True
    FACTORY_BASE_CLASS = 'factory.django.DjangoModelFactory'
+   FACTORY_LINE_LENGTH = 79
 
 Todo
 ----
